@@ -13,6 +13,11 @@
 
       <v-card-actions>
         <v-btn color="primary"> {{ buttonText }} </v-btn>
+        <div style="flex-grow: 1"></div>
+        <v-btn text> 2 Comments</v-btn>
+        <v-btn class="mx-2" icon>
+          <v-icon dark> mdi-delete </v-icon>
+        </v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -33,6 +38,9 @@ export default {
       type: String,
     },
     description: {
+      type: String,
+    },
+    id: {
       type: String,
     },
   },

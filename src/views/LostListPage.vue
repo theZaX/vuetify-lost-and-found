@@ -2,7 +2,7 @@
   <div class="container">
     <div class="clamped">
       <h2 class="font-weight-regular">Found Things</h2>
-      {{ user }}
+
       <p class="my-2">
         Found something? Post it
         <router-link to="/dashboard" style="text-decoration: inherit">
@@ -38,7 +38,7 @@ import "firebase/firestore";
 import ItemCard from "../components/ItemCard.vue";
 
 export default {
-  name: "FoundListPage",
+  name: "LostListPage",
 
   data() {
     return {
@@ -65,15 +65,6 @@ export default {
       this.items = items;
 
       console.log(foundCollection.docs.map((doc) => doc.data()));
-    },
-  },
-
-  computed: {
-    // get the root state of the instance user
-    user: {
-      get() {
-        return this.$root.user;
-      },
     },
   },
 

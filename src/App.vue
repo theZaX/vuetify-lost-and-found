@@ -40,8 +40,16 @@
       </v-list-item>
 
       <v-divider></v-divider>
-
       <v-list dense nav>
+        <v-select
+          :items="items"
+          item-text="name"
+          label="Solo field"
+          solo
+          :value="userData"
+          @input="changeUser"
+        ></v-select>
+
         <v-list-item
           v-for="item in navigationItems"
           :key="item.title"
@@ -63,6 +71,9 @@
 
 <script>
 import GithubRepositoryLink from "./components/GithubRepositoryLink.vue";
+import { users } from "@/lib/fakeDatabase";
+
+import { getUserById, getUerIdByName } from "@/lib/fakeapi";
 
 export default {
   name: "App",
@@ -89,7 +100,37 @@ export default {
         icon: "mdi-file-find-outline",
         route: "/found",
       },
+      {
+        title: "Lost Items",
+        icon: "mdi-magnify",
+        route: "/lost",
+      },
     ],
+    items: users,
   }),
+  computed: {
+    // get the root state of the instance user
+    user: {
+      get() {
+        return this.$root.currentUser;
+      },
+      set(name) {
+        // find the id of the user with the given name
+        const userId = getUerIdByName(name);
+
+        this.$root.currentUser = userId;
+      },
+    },
+
+    userData() {
+      return getUserById(this.user);
+    },
+  },
+
+  methods: {
+    changeUser(user) {
+      this.user = user;
+    },
+  },
 };
 </script>

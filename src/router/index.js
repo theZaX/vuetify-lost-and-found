@@ -4,6 +4,7 @@ import LandingPage from "../views/LandingPage.vue";
 
 import DashboardPage from "../views/DashboardPage";
 import FoundListPage from "../views/FoundListPage";
+import LostListPage from "../views/LostListPage";
 
 Vue.use(VueRouter);
 
@@ -22,6 +23,11 @@ const routes = [
     component: FoundListPage,
     path: "/found",
     name: "FoundListPage",
+  },
+  {
+    component: LostListPage,
+    path: "/lost",
+    name: "LostListPage",
   },
 ];
 

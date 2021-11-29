@@ -24,5 +24,8 @@ firebase.initializeApp(firebaseConfig);
 new Vue({
   router,
   vuetify,
+  data: {
+    currentUser: "1",
+  },
   render: (h) => h(App),
 }).$mount("#app");
