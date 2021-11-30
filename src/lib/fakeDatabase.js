@@ -85,7 +85,7 @@ const comments = [
     id: "2",
     itemId: "1",
     userId: "2",
-    text: "Do you want to meet up to pick it up?",
+    text: "Do you want to meet up so I can pick it up?",
   },
 ];
 

@@ -1,21 +1,20 @@
 <template>
   <div class="container">
     <div class="clamped">
-      <h2 class="font-weight-regular">Found Things</h2>
-      {{ user }}
+      <h2 class="font-weight-regular">Foound Things</h2>
+
       <p class="my-2">
         Found something? Post it
         <router-link to="/dashboard" style="text-decoration: inherit">
           here
         </router-link>
       </p>
-
       <v-row class="mt-2">
         <item-card
           class="col-12 col-sm-6"
           v-for="item in items"
           :key="item.id"
-          buttonText="Claim"
+          type="Other"
           :description="item.description"
           :image="item.image"
           :title="item.title"
@@ -26,19 +25,13 @@
   </div>
 </template>
 
-
-
-
-
 <script>
-import firebase from "firebase/app";
-
-import "firebase/firestore";
+import { getAllFoundItems } from "@/lib/fakeapi";
 
 import ItemCard from "../components/ItemCard.vue";
 
 export default {
-  name: "FoundListPage",
+  name: "LostListPage",
 
   data() {
     return {
@@ -50,35 +43,14 @@ export default {
   },
 
   methods: {
-    async fetchItems() {
-      const documentRef = firebase.firestore().collection("found");
-
-      const foundCollection = await documentRef.get();
-
-      const items = foundCollection.docs.map((doc) => {
-        return {
-          ...doc.data(),
-          id: doc.id,
-        };
-      });
-
-      this.items = items;
-
-      console.log(foundCollection.docs.map((doc) => doc.data()));
-    },
-  },
-
-  computed: {
-    // get the root state of the instance user
-    user: {
-      get() {
-        return this.$root.user;
-      },
+    async fetchFoundItems() {
+      const foundItems = getAllFoundItems();
+      this.items = await foundItems;
     },
   },
 
   mounted() {
-    this.fetchItems();
+    this.fetchFoundItems();
   },
 };
 </script>

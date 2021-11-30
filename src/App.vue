@@ -73,7 +73,7 @@
 import GithubRepositoryLink from "./components/GithubRepositoryLink.vue";
 import { users } from "@/lib/fakeDatabase";
 
-import { getUserById, getUerIdByName } from "@/lib/fakeapi";
+import { getUserById, getUserIdByName } from "@/lib/fakeapi";
 
 export default {
   name: "App",
@@ -116,7 +116,7 @@ export default {
       },
       set(name) {
         // find the id of the user with the given name
-        const userId = getUerIdByName(name);
+        const userId = getUserIdByName(name);
 
         this.$root.currentUser = userId;
       },
