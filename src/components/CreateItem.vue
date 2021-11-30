@@ -29,7 +29,7 @@
             </v-col>
             <v-col cols="12">
               <v-text-field
-                label="ImageUrl*"
+                label="Image Url*"
                 v-model="formImageUrl"
                 name="title"
                 required
