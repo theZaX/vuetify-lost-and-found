@@ -34,6 +34,15 @@ export const getCommentsByItemId = async (itemId) => {
   return comments.filter((comment) => comment.itemId === itemId);
 };
 
+
+// replace with axios
+
+
+
+
+
+
+
 export const getUserById = (userId) => {
   return users.find((user) => user.id === userId);
 };
