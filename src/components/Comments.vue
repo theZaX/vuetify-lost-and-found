@@ -56,7 +56,8 @@
 
 
 <script>
-import { getCommentsByItemId, getUserById, postComment } from "@/lib/fakeapi";
+import { getUserById, postComment } from "@/lib/fakeapi";
+import { getCommentsByItemId } from "@/lib/serverFunctions";
 
 export default {
   name: "Comments",

@@ -1,6 +1,8 @@
 // a function that delays a random amount of time between 0 and 1 second
 
-import { items, users, comments } from "./fakeDatabase";
+import { items, users } from "./fakeDatabase";
+
+import axios from "axios";
 
 const randomDelay = () =>
   new Promise((resolve) => setTimeout(resolve, Math.random() * 1000));
@@ -30,21 +32,12 @@ export const getFoundItemsByUser = async (userId) => {
 };
 
 export const getCommentsByItemId = async (itemId) => {
-
   const url = `/api/comments/${itemId}`;
   const response = await axios.get(url);
+  return response.data;
 };
 
-
 // replace with axios
-
-
-
-
-
-
-
-
 
 export const getUserById = (userId) => {
   return users.find((user) => user.id === userId);

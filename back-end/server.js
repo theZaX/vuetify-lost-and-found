@@ -1,28 +1,31 @@
-const express = require('express');
+const express = require("express");
 const bodyParser = require("body-parser");
+
+const { v4: uuidv4 } = require("uuid");
 
 // export PATH="/C/Program Files/MongoDB/Server/5.0/bin"
 
 const app = express();
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
+app.use(
+  bodyParser.urlencoded({
+    extended: false,
+  })
+);
 
-const mongoose = require('mongoose');
-
-// connect to the database
-mongoose.connect('mongodb://localhost:27017/lostandfound', {
-  useNewUrlParser: true
+const mongoose = require("mongoose");
+mongoose.connect("mongodb://localhost:27017/lostandfound", {
+  useNewUrlParser: true,
 });
 
+const commentSchema = new mongoose.Schema({
+  id: String,
+  itemId: String,
+  userId: String,
+  text: String,
+});
 
-// 
-
-
-// get comments
-
-
+const Comment = mongoose.model("comment", commentSchema);
 
 const comments = [
   {
@@ -37,99 +40,62 @@ const comments = [
     userId: "2",
     text: "Do you want to meet up so I can pick it up?",
   },
+  {
+    id: "1",
+    itemId: "2",
+    userId: "1",
+    text: "I found this item and it was a ferrari",
+  },
+  {
+    id: "2",
+    itemId: "2",
+    userId: "2",
+    text: "Do you want to meet up so I can pick it up?",
+  },
 ];
 
-app.get('/comments/:id',  async(req, res) => { 
-  return res.send(comments.filter(comment => comment.itemId === req.params.id));
-}
-
-
-
-
-
-// this is a comment
-
-
-// Configure multer so that it will upload to '../front-end/public/images'
-// const multer = require('multer')
-// const upload = multer({
-//   dest: '/var/www/museum.dylan-allen.com/images/',
-//   limits: {
-//     fileSize: 10000000
-//   }
-// });
-
-// Create a scheme for items in the museum: a title and a path to an image.
-const itemSchema = new mongoose.Schema({
-  id: String,
-  title: String,
-  description: String,
-  image: String,
-  type: String,
-  reporterid: String,
+app.get("/api/comments/:id", async (req, res) => {
+  const comments = await Comment.find({ itemId: req.params.id });
+  return res.send(comments);
+});
+app.get("/api/comments", async (req, res) => {
+  const comments = await Comment.find();
+  return res.send(comments);
 });
 
-// Create a model for items in the museum.
-const Item = mongoose.model('Item', itemSchema);
+app.put("/api/comments/:id", async (req, res) => {
+  const comment = comments.find((comment) => comment.id === req.params.id);
+  if (!comment) {
+    return res.status(404).send("Comment not found");
+  }
+  const updatedComment = {
+    ...comment,
+    ...req.body,
+  };
+  return res.send(updatedComment);
+});
 
-// Get a list of all of the items in the museum.
-app.get('/api/items', async (req, res) => {
+app.delete("/api/comments/:id", async (req, res) => {
   try {
-    let items = await Item.find();
-    res.send(items);
+    const comment = await Comment.findOneAndDelete({ id: req.params.id });
+    res.sendStatus(200);
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
   }
 });
 
+// create
 
-
-
-
-
-app.post('/api/items', async (req, res) => {
-  const item = new Item({
-    title: req.body.title,
-    path: req.body.path,
-    description: req.body.description,
+app.post("/api/comments", async (req, res) => {
+  const comment = new Comment({
+    id: uuidv4(),
+    itemId: req.body.itemId,
+    userId: req.body.userId,
+    text: req.body.text,
   });
-  try {
-    await item.save();
-    res.send(item);
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
-  }
+  const newComment = await comment.save();
+  return res.send(newComment);
 });
 
-app.delete('/api/items/:id', async (req, res) => {
-  try {
-    await Item.deleteOne({
-      _id: req.params.id
-    });
-    res.sendStatus(200);
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
-  }
-});
-
-app.put("/api/items/:id", async (req, res) => {
-  try {
-    // update the item
-    await Item.updateOne(
-      { _id: req.params.id },
-      { title: req.body.title, description: req.body.description }
-    );
-
-    res.sendStatus(200);
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
-  }
-});
-
-
-
-app.listen(3000, () => console.log('Server listening on port 3000!'));
+app.listen(3000, () => console.log("Server listening on port 3000!"));
