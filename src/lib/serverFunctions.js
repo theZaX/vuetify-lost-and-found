@@ -30,7 +30,7 @@ export const getFoundItemsByUser = async (userId) => {
 };
 
 export const getCommentsByItemId = async (itemId) => {
-  
+
   const url = `/api/comments/${itemId}`;
   const response = await axios.get(url);
 };
