@@ -34,15 +34,11 @@
           website. Here, if you lose anything on or off campus (in the general vicinity of BYU), we 
           want people to post what was lost or found here! That way there is one source to come to for 
           any lost (or found) Items in the area. If you would like to learn more, are looking for something, 
-          or have found something, you have come to the right place! Use our Menu to navigate our website and see
-          any current postings. 
+          or have found something, you have come to the right place! Use our Menu to navigate our website! Post, 
+          view, and follow up on any lost items in the area!
       </p>
 
-      <h3>Important API Notice</h3>
 
-      <p>The API we are using is one we created on Firebase. Malcom (the TA) reccomended that I make note that it is not a large database 
-          we are using, but one we created ourselves. The API is being accessed mainly in the <em>Found Items</em> tab. Thank you! :)
-      </p>
     </div>
   </div>
 </template>

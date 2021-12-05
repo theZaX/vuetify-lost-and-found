@@ -37,6 +37,23 @@ export const getCommentsByItemId = async (itemId) => {
   return response.data;
 };
 
+export const postComment = async (comment) => {
+  const response = await axios.post('/api/comments/', comment);
+  console.log(response.data);
+  return response.data;
+};
+
+export const deleteComment = async (itemId) => {
+  const url = `/api/comments/${itemId}`;
+  const response = await axios.delete(url);
+  return response.data;
+} 
+
+export const updateComment = async (itemId, comment) => {
+  const url = `/api/comments/${itemId}`;
+  const response = await axios.put(url, comment);
+  return response.data;
+}
 // replace with axios
 
 export const getUserById = (userId) => {
@@ -50,11 +67,6 @@ export const getUserIdByName = (name) => {
 export const updateItem = async (itemId, item) => {
   console.log(itemId, item);
   await randomDelay();
-};
-
-export const postComment = async (comment) => {
-  await randomDelay();
-  console.log(comment);
 };
 
 export const deleteItem = async (itemId) => {
