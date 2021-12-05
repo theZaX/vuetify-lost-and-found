@@ -1,34 +1,48 @@
-// a function that delays a random amount of time between 0 and 1 second
-
-import { items, users } from "./fakeDatabase";
+import { users } from "./fakeDatabase";
 
 import axios from "axios";
 
-const randomDelay = () =>
-  new Promise((resolve) => setTimeout(resolve, Math.random() * 1000));
-
 export const getAllLostItems = async () => {
-  await randomDelay();
-  return items.filter((item) => item.type === "lost");
+  // add a query parameter to the url of type lost
+  const response = await axios.get("/api/items", {
+    params: {
+      type: "lost",
+    },
+  });
+
+  return response.data;
 };
 export const getAllFoundItems = async () => {
-  await randomDelay();
-  return items.filter((item) => item.type === "found");
+  // add a query parameter to the url of type lost
+  const response = await axios.get("/api/items", {
+    params: {
+      type: "found",
+    },
+  });
+
+  return response.data;
 };
 
 export const getLostItemsByUser = async (userId) => {
-  await randomDelay();
-  return items.filter(
-    (item) => item.type === "lost" && item.reporterId === userId
-  );
+  const response = await axios.get("/api/items", {
+    params: {
+      type: "lost",
+      userId: userId,
+    },
+  });
+
+  return response.data;
 };
 
 export const getFoundItemsByUser = async (userId) => {
-  await randomDelay();
-  console.log(userId);
-  return items.filter(
-    (item) => item.type === "found" && item.reporterId === userId
-  );
+  const response = await axios.get("/api/items", {
+    params: {
+      type: "found",
+      userId: userId,
+    },
+  });
+
+  return response.data;
 };
 
 export const getCommentsByItemId = async (itemId) => {
@@ -38,7 +52,7 @@ export const getCommentsByItemId = async (itemId) => {
 };
 
 export const postComment = async (comment) => {
-  const response = await axios.post('/api/comments/', comment);
+  const response = await axios.post("/api/comments/", comment);
   console.log(response.data);
   return response.data;
 };
@@ -47,14 +61,13 @@ export const deleteComment = async (itemId) => {
   const url = `/api/comments/${itemId}`;
   const response = await axios.delete(url);
   return response.data;
-} 
+};
 
 export const updateComment = async (itemId, comment) => {
   const url = `/api/comments/${itemId}`;
   const response = await axios.put(url, comment);
   return response.data;
-}
-// replace with axios
+};
 
 export const getUserById = (userId) => {
   return users.find((user) => user.id === userId);
@@ -65,16 +78,21 @@ export const getUserIdByName = (name) => {
 };
 
 export const updateItem = async (itemId, item) => {
-  console.log(itemId, item);
-  await randomDelay();
+  const response = await axios.put(`/api/items/${itemId}`, item);
+
+  return response.data;
 };
 
 export const deleteItem = async (itemId) => {
-  await randomDelay();
-  console.log(itemId);
+  const response = await axios.delete(`/api/items/${itemId}`);
+  return response.data;
 };
 
 export const createNewItem = async (item, userId) => {
-  await randomDelay();
-  console.log(item, userId);
+  const response = await axios.post("/api/items", {
+    ...item,
+    reporterId: userId,
+  });
+  console.log(response.data);
+  return response.data;
 };

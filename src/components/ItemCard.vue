@@ -110,7 +110,7 @@
 
 
 <script>
-import { updateItem, deleteItem } from "@/lib/fakeapi";
+import { updateItem, deleteItem } from "@/lib/serverFunctions";
 
 import Comments from "./Comments.vue";
 

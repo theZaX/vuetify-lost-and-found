@@ -65,7 +65,7 @@
 
 
 <script>
-import { createNewItem } from "@/lib/fakeapi";
+import { createNewItem } from "@/lib/serverFunctions";
 
 export default {
   name: "CreateItem",
@@ -98,7 +98,7 @@ export default {
         userId: user.id,
         type: this.type,
       };
-      await createNewItem(this.$root.currentUser, item);
+      await createNewItem(item, this.$root.currentUser);
 
       this.formTitle = "";
       this.formDescription = "";

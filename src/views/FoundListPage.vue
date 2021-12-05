@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="clamped">
-      <h2 class="font-weight-regular">Foound Things</h2>
+      <h2 class="font-weight-regular">Found Things</h2>
 
       <p class="my-2">
         Found something? Post it
@@ -18,6 +18,7 @@
           :description="item.description"
           :image="item.image"
           :title="item.title"
+          :id="item.id"
         >
         </item-card>
       </v-row>
@@ -26,7 +27,8 @@
 </template>
 
 <script>
-import { getAllFoundItems } from "@/lib/fakeapi";
+// import { getAllFoundItems } from "@/lib/fakeapi";
+import { getAllFoundItems } from "@/lib/serverFunctions";
 
 import ItemCard from "../components/ItemCard.vue";
 

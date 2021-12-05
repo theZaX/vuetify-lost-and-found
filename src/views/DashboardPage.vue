@@ -2,7 +2,7 @@
   <div class="container">
     <div class="clamped">
       <h2 class="font-weight-regular">Personal Dashboard</h2>
-      <CreateItem></CreateItem>
+      <CreateItem @update="fetchItems"></CreateItem>
       <p class="my-2">Items I Have Lost:</p>
 
       <v-row class="mt-2">
@@ -32,6 +32,7 @@
           :description="item.description"
           :image="item.image"
           :title="item.title"
+          :id="item.id"
         >
         </item-card>
       </v-row>
@@ -40,7 +41,7 @@
 </template>
 
 <script>
-import { getLostItemsByUser, getFoundItemsByUser } from "@/lib/fakeapi";
+import { getLostItemsByUser, getFoundItemsByUser } from "@/lib/serverFunctions";
 
 import ItemCard from "../components/ItemCard.vue";
 
@@ -68,6 +69,10 @@ export default {
     async fetchFoundItems() {
       const foundItems = getFoundItemsByUser(this.user);
       this.foundItems = await foundItems;
+    },
+    async fetchItems() {
+      this.fetchLostItems();
+      this.fetchFoundItems();
     },
   },
 

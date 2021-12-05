@@ -18,6 +18,7 @@
           :description="item.description"
           :image="item.image"
           :title="item.title"
+          :id="item.id"
         >
         </item-card>
       </v-row>
@@ -26,7 +27,7 @@
 </template>
 
 <script>
-import { getAllLostItems } from "@/lib/fakeapi";
+import { getAllLostItems } from "@/lib/serverFunctions";
 
 import ItemCard from "../components/ItemCard.vue";
 
